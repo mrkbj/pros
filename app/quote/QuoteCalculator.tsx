@@ -7,7 +7,6 @@ import { init, send } from "@emailjs/browser"
 type YardSize = "small" | "medium" | "large"
 type Frequency = "weekly" | "biweekly" | "monthly"
 
-// Pricing tiers for different yard sizes and service frequencies
 const pricingTiers: Record<
   YardSize,
   Record<Frequency, { oneDog: number; twoDogs: number; threeDogs: number; fourOrMore: number }>
@@ -30,28 +29,26 @@ const pricingTiers: Record<
 }
 
 export function QuoteCalculator() {
-  // State variables for form inputs and submission status
   const [frequency, setFrequency] = useState<Frequency>("weekly")
   const [yardSize, setYardSize] = useState<YardSize>("small")
   const [dogs, setDogs] = useState(1)
   const [email, setEmail] = useState("")
+  const [name, setName] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Initialize EmailJS when the component mounts
   useEffect(() => {
     init("R5CBdCu4Opuuiz-Ur")
   }, [])
 
-  // Calculate price based on inputs
   const calculatePrice = () => {
     const tier = pricingTiers[yardSize][frequency]
     if (dogs === 1) return tier.oneDog
     if (dogs === 2) return tier.twoDogs
     if (dogs === 3) return tier.threeDogs
-    return tier.fourOrMore // 4 or more dogs
+    return tier.fourOrMore
   }
 
-  // Handle form submission
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsSubmitting(true)
@@ -59,19 +56,38 @@ export function QuoteCalculator() {
     const form = event.currentTarget
 
     try {
-      // Send email using EmailJS
+      // Send email to the user
       await send(
         "service_8va52za",
         "template_69g2fcg",
         {
+          name: name,
           yard_size: yardSize,
           frequency: frequency,
           dogs: dogs,
           email: email,
+          phone: phoneNumber,
           price: calculatePrice(),
         },
         "R5CBdCu4Opuuiz-Ur",
       )
+
+      // Send email to the separate email address
+      await send(
+        "service_8va52za",
+        "template_ay1qenr", // Replace with your separate template ID
+        {
+          name: name,
+          yard_size: yardSize,
+          frequency: frequency,
+          dogs: dogs,
+          email: email,
+          phone: phoneNumber,
+          price: calculatePrice(),
+        },
+        "R5CBdCu4Opuuiz-Ur",
+      )
+
       toast.success("Quote sent successfully!")
       alert("Your quote has been submitted successfully!")
     } catch (error) {
@@ -87,10 +103,60 @@ export function QuoteCalculator() {
       <h3 className="text-2xl font-bold text-gray-800 mb-6">Calculate Your Quote</h3>
 
       <div className="space-y-6">
-        {/* Yard Size Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Yard Size</label>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="Enter your name"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="Enter your email"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="Enter your phone number"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="yard_size" className="block text-sm font-medium text-gray-700">
+            Yard Size
+          </label>
           <select
+            id="yard_size"
             name="yard_size"
             value={yardSize}
             onChange={(e) => setYardSize(e.target.value as YardSize)}
@@ -102,10 +168,12 @@ export function QuoteCalculator() {
           </select>
         </div>
 
-        {/* Service Frequency Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Service Frequency</label>
+          <label htmlFor="frequency" className="block text-sm font-medium text-gray-700">
+            Service Frequency
+          </label>
           <select
+            id="frequency"
             name="frequency"
             value={frequency}
             onChange={(e) => setFrequency(e.target.value as Frequency)}
@@ -117,11 +185,13 @@ export function QuoteCalculator() {
           </select>
         </div>
 
-        {/* Number of Dogs Slider */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Number of Dogs: {dogs}</label>
+          <label htmlFor="dogs" className="block text-sm font-medium text-gray-700">
+            Number of Dogs: {dogs}
+          </label>
           <input
             type="range"
+            id="dogs"
             name="dogs"
             min="1"
             max="4"
@@ -135,30 +205,13 @@ export function QuoteCalculator() {
           </div>
         </div>
 
-        {/* Email Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Email Address</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter your email"
-          />
-        </div>
-
-        {/* Estimated Price Display */}
         <div className="bg-gray-50 px-4 py-5 rounded-lg">
           <span className="text-sm font-medium text-gray-500">Estimated Price:</span>
           <span className="text-2xl font-bold text-blue-600"> ${calculatePrice()}</span>
         </div>
 
-        {/* Hidden input for price (to be sent with the form) */}
         <input type="hidden" name="price" value={calculatePrice()} />
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
