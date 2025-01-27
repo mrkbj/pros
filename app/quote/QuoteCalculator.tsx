@@ -53,7 +53,7 @@ export function QuoteCalculator() {
     event.preventDefault()
     setIsSubmitting(true)
 
-    const form = event.currentTarget
+    
 
     try {
       // Send email to the user
