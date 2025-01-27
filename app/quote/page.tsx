@@ -8,7 +8,7 @@ export default function QuotePage() {
       <div className="max-w-2xl mx-auto">
         <QuoteCalculator />
         <div className="mt-8 p-6 bg-green-50 rounded-lg">
-          <h2 className="text-xl font-semibold text-green-800 mb-4">What's Included:</h2>
+          <h2 className="text-xl font-semibold text-green-800 mb-4">What&apos;s Included:</h2>
           <ul className="space-y-2 text-green-700">
             <li className="flex items-center">
               <span className="mr-2">✓</span>

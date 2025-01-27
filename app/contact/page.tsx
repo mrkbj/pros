@@ -54,8 +54,8 @@ export default function ContactPage() {
         <div>
           <h2 className="text-2xl font-semibold text-blue-600 mb-4">Get in Touch</h2>
           <p className="text-gray-600 mb-4">
-            Have questions about our services or want to schedule a cleanup? We're here to help! Fill out the form
-            below, and we'll get back to you as soon as possible.
+            Have questions about our services or want to schedule a cleanup? We&apos;re here to help! Fill out the form
+            below, and we&apos;ll get back to you as soon as possible.
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>

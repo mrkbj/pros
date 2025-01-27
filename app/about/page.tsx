@@ -19,7 +19,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-semibold text-blue-600 mb-4">Our Values</h2>
             <ul className="list-disc list-inside text-gray-600 space-y-2">
               <li>Reliability: We show up when we say we will, every time.</li>
-              <li>Thoroughness: We don't miss a spot, ensuring your yard is completely clean.</li>
+              <li>Thoroughness: We don&apos;t miss a spot, ensuring your yard is completely clean.</li>
               <li>Professionalism: We use responsible disposal methods.</li>
               <li>Customer satisfaction: Your happiness is our top priority.</li>
             </ul>
