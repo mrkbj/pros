@@ -15,7 +15,7 @@ export default function ServicesPage() {
           />
           <div className="p-6">
             <h2 className="text-2xl font-semibold text-blue-600 mb-4">Residential Service</h2>
-            <p className="text-gray-600 mb-4">We offer regular waste removal for your home's yard, keeping it clean and safe for your family and pets. Choose from weekly, bi-weekly, or custom schedules to fit your needs.</p>
+            <p className="text-gray-600 mb-4">We offer regular waste removal for your home&apos;s yard, keeping it clean and safe for your family and pets. Choose from weekly, bi-weekly, or custom schedules to fit your needs.</p>
             <ul className="list-disc list-inside text-gray-600">
               <li>Thorough yard cleaning</li>
               <li>Flexible scheduling options</li>
