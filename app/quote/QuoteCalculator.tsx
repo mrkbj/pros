@@ -36,6 +36,7 @@ export function QuoteCalculator() {
   const [name, setName] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [deodorize, setDeodorize] = useState(false)
 
   useEffect(() => {
     init("R5CBdCu4Opuuiz-Ur")
@@ -43,17 +44,16 @@ export function QuoteCalculator() {
 
   const calculatePrice = () => {
     const tier = pricingTiers[yardSize][frequency]
-    if (dogs === 1) return tier.oneDog
-    if (dogs === 2) return tier.twoDogs
-    if (dogs === 3) return tier.threeDogs
-    return tier.fourOrMore
+    let price = dogs === 1 ? tier.oneDog : dogs === 2 ? tier.twoDogs : dogs === 3 ? tier.threeDogs : tier.fourOrMore
+    if (deodorize) {
+      price += 10 // Add $10 for deodorizing service
+    }
+    return price
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsSubmitting(true)
-
-    
 
     try {
       // Send email to the user
@@ -68,6 +68,7 @@ export function QuoteCalculator() {
           email: email,
           phone: phoneNumber,
           price: calculatePrice(),
+          deodorize: deodorize,
         },
         "R5CBdCu4Opuuiz-Ur",
       )
@@ -84,6 +85,7 @@ export function QuoteCalculator() {
           email: email,
           phone: phoneNumber,
           price: calculatePrice(),
+          deodorize: deodorize,
         },
         "R5CBdCu4Opuuiz-Ur",
       )
@@ -205,9 +207,23 @@ export function QuoteCalculator() {
           </div>
         </div>
 
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="deodorize"
+            name="deodorize"
+            checked={deodorize}
+            onChange={(e) => setDeodorize(e.target.checked)}
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          />
+          <label htmlFor="deodorize" className="ml-2 block text-sm text-gray-900">
+            Add deodorizing service (extra fee applies)
+          </label>
+        </div>
+
         <div className="bg-gray-50 px-4 py-5 rounded-lg">
           <span className="text-sm font-medium text-gray-500">Estimated Price:</span>
-          <span className="text-2xl font-bold text-blue-600"> ${calculatePrice()}</span>
+          <span className="text-2xl font-bold text-blue-600"> ${calculatePrice()}/Week</span>
         </div>
 
         <input type="hidden" name="price" value={calculatePrice()} />
