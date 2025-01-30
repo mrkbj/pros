@@ -39,7 +39,6 @@ export default function ServicesPage() {
               <li>Large area coverage</li>
               <li>Regular maintenance plans</li>
               <li>Discreet and efficient service</li>
-              <li>Customized solutions for your property</li>
             </ul>
           </div>
         </div>
