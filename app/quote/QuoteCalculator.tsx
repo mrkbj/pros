@@ -44,16 +44,20 @@ export function QuoteCalculator() {
 
   const calculatePrice = () => {
     const tier = pricingTiers[yardSize][frequency]
-    let price = dogs === 1 ? tier.oneDog : dogs === 2 ? tier.twoDogs : dogs === 3 ? tier.threeDogs : tier.fourOrMore
+    let weeklyPrice =
+      dogs === 1 ? tier.oneDog : dogs === 2 ? tier.twoDogs : dogs === 3 ? tier.threeDogs : tier.fourOrMore
     if (deodorize) {
-      price += 10 // Add $10 for deodorizing service
+      weeklyPrice += 10 // Add $10 for deodorizing service
     }
-    return price
+    const monthlyPrice = weeklyPrice * 4 // Assuming 4 weeks per month
+    return { weekly: weeklyPrice, monthly: monthlyPrice }
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsSubmitting(true)
+
+    const prices = calculatePrice()
 
     try {
       // Send email to the user
@@ -67,7 +71,8 @@ export function QuoteCalculator() {
           dogs: dogs,
           email: email,
           phone: phoneNumber,
-          price: calculatePrice(),
+          price_monthly: prices.monthly.toFixed(2),
+          price_weekly: prices.weekly.toFixed(2),
           deodorize: deodorize,
         },
         "R5CBdCu4Opuuiz-Ur",
@@ -84,7 +89,8 @@ export function QuoteCalculator() {
           dogs: dogs,
           email: email,
           phone: phoneNumber,
-          price: calculatePrice(),
+          price_monthly: prices.monthly.toFixed(2),
+          price_weekly: prices.weekly.toFixed(2),
           deodorize: deodorize,
         },
         "R5CBdCu4Opuuiz-Ur",
@@ -221,12 +227,19 @@ export function QuoteCalculator() {
           </label>
         </div>
 
-        <div className="bg-gray-50 px-4 py-5 rounded-lg">
-          <span className="text-sm font-medium text-gray-500">Estimated Price:</span>
-          <span className="text-2xl font-bold text-blue-600"> ${calculatePrice()}/Week</span>
+        <div className="bg-gray-50 px-4 py-5 rounded-lg space-y-2">
+          <div>
+            <span className="text-sm font-medium text-gray-500">Estimated Monthly Price:</span>
+            <span className="text-2xl font-bold text-blue-600"> ${calculatePrice().monthly.toFixed(2)}/Month</span>
+          </div>
+          <div>
+            <span className="text-sm font-medium text-gray-500">Estimated Weekly Price:</span>
+            <span className="text-lg font-semibold text-blue-600"> ${calculatePrice().weekly.toFixed(2)}/Week</span>
+          </div>
         </div>
 
-        <input type="hidden" name="price" value={calculatePrice()} />
+        <input type="hidden" name="price_monthly" value={calculatePrice().monthly.toFixed(2)} />
+        <input type="hidden" name="price_weekly" value={calculatePrice().weekly.toFixed(2)} />
 
         <button
           type="submit"
