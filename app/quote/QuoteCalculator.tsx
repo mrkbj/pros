@@ -44,12 +44,12 @@ export function QuoteCalculator() {
 
   const calculatePrice = () => {
     const tier = pricingTiers[yardSize][frequency]
-    let weeklyPrice =
+    let monthlyPrice =
       dogs === 1 ? tier.oneDog : dogs === 2 ? tier.twoDogs : dogs === 3 ? tier.threeDogs : tier.fourOrMore
     if (deodorize) {
-      weeklyPrice += 10 // Add $10 for deodorizing service
+      monthlyPrice += 40 // Add $40 per month for deodorizing service
     }
-    const monthlyPrice = weeklyPrice * 4 // Assuming 4 weeks per month
+    const weeklyPrice = monthlyPrice / 4 // Calculate weekly price from monthly price
     return { weekly: weeklyPrice, monthly: monthlyPrice }
   }
 
