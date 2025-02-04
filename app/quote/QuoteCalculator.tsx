@@ -59,40 +59,27 @@ export function QuoteCalculator() {
 
     const prices = calculatePrice()
 
+    const templateParams = {
+      name: name,
+      yard_size: yardSize,
+      frequency: frequency,
+      dogs: dogs.toString(),
+      email: email,
+      phone: phoneNumber,
+      price_monthly: prices.monthly.toFixed(2),
+      price_weekly: prices.weekly.toFixed(2),
+      deodorize: deodorize ? "Yes" : "No",
+    }
+
     try {
       // Send email to the user
-      await send(
-        "service_nfkb0es",
-        "template_u5rkgn8",
-        {
-          name: name,
-          yard_size: yardSize,
-          frequency: frequency,
-          dogs: dogs,
-          email: email,
-          phone: phoneNumber,
-          price_monthly: prices.monthly.toFixed(2),
-          price_weekly: prices.weekly.toFixed(2),
-          deodorize: deodorize,
-        },
-        "t-Z69g1Q2y-qidwm3",
-      )
+      await send("service_nfkb0es", "template_u5rkgn8", templateParams, "t-Z69g1Q2y-qidwm3")
 
       // Send email to the separate email address
       await send(
         "service_nfkb0es",
         "template_yg7hf6v", // Replace with your separate template ID
-        {
-          name: name,
-          yard_size: yardSize,
-          frequency: frequency,
-          dogs: dogs,
-          email: email,
-          phone: phoneNumber,
-          price_monthly: prices.monthly.toFixed(2),
-          price_weekly: prices.weekly.toFixed(2),
-          deodorize: deodorize,
-        },
+        templateParams,
         "t-Z69g1Q2y-qidwm3",
       )
 
