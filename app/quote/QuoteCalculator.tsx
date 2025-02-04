@@ -62,7 +62,7 @@ export function QuoteCalculator() {
     try {
       // Send email to the user
       await send(
-        "service_61glexo",
+        "service_nfkb0es",
         "template_u5rkgn8",
         {
           name: name,
@@ -80,7 +80,7 @@ export function QuoteCalculator() {
 
       // Send email to the separate email address
       await send(
-        "service_61glexo",
+        "service_nfkb0es",
         "template_yg7hf6v", // Replace with your separate template ID
         {
           name: name,
