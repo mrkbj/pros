@@ -39,7 +39,7 @@ export function QuoteCalculator() {
   const [deodorize, setDeodorize] = useState(false)
 
   useEffect(() => {
-    init("R5CBdCu4Opuuiz-Ur")
+    init("t-Z69g1Q2y-qidwm3")
   }, [])
 
   const calculatePrice = () => {
@@ -62,8 +62,8 @@ export function QuoteCalculator() {
     try {
       // Send email to the user
       await send(
-        "service_8va52za",
-        "template_69g2fcg",
+        "service_61glexo",
+        "template_u5rkgn8",
         {
           name: name,
           yard_size: yardSize,
@@ -75,13 +75,13 @@ export function QuoteCalculator() {
           price_weekly: prices.weekly.toFixed(2),
           deodorize: deodorize,
         },
-        "R5CBdCu4Opuuiz-Ur",
+        "t-Z69g1Q2y-qidwm3",
       )
 
       // Send email to the separate email address
       await send(
-        "service_8va52za",
-        "template_ay1qenr", // Replace with your separate template ID
+        "service_61glexo",
+        "template_yg7hf6v", // Replace with your separate template ID
         {
           name: name,
           yard_size: yardSize,
@@ -93,7 +93,7 @@ export function QuoteCalculator() {
           price_weekly: prices.weekly.toFixed(2),
           deodorize: deodorize,
         },
-        "R5CBdCu4Opuuiz-Ur",
+        "t-Z69g1Q2y-qidwm3",
       )
 
       toast.success("Quote sent successfully!")
