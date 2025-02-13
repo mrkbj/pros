@@ -16,7 +16,7 @@ export default function HomePage() {
       </section>
       <div className="text-center mt-8">
         <Link
-          href="/quote"
+          href="https://client.sweepandgo.com/the-pooper-scooper-pros-dwef9/register"
           className="inline-block bg-blue-500 text-white hover:bg-blue-600 px-8 py-4 rounded-md text-lg font-semibold transition-colors"
         >
           Get a Free Quote
