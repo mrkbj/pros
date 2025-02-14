@@ -12,7 +12,7 @@ export default function HomePage() {
           height={600}
           className="w-full h-[400px] object-contain bg-gray-50 border-2 border-gray-300"
           priority
-        />
+        /> 
       </section>
       <div className="text-center mt-8">
         <Link
